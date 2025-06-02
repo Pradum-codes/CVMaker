@@ -11,6 +11,22 @@ function EducationDetails({ formData, setFormData }) {
     setFormData({ ...formData, educationDetails: updatedEducation });
   };
 
+  const addForm = () => {
+    setFormData({
+      ...formData,
+      educationDetails: [
+        ...education,
+        {
+          institute: '',
+          degree: '',
+          year: '',
+          score: '',
+          focus: ''
+        }
+      ]
+    });
+  }
+
   return (
     <div className="section">
       <h2>Education Details</h2>
@@ -67,6 +83,7 @@ function EducationDetails({ formData, setFormData }) {
           </div>
         </form>
       ))}
+      <button onClick={addForm} className="border-purple-200 text-purple-600 hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700 rounded-[4px]">ADD FEILD</button>
     </div>
   );
 }

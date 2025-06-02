@@ -11,6 +11,21 @@ function Projects({ formData, setFormData }) {
     setFormData({ ...formData, projects: updatedProjects });
   };
 
+  const addForm = () => {
+    setFormData({
+      ...formData,
+      projects: [
+        ...projectList,
+          {
+            name: '',
+            description: '',
+            toolsUsed: '',
+            link: ''
+          }
+      ]
+    });
+  }
+
   return (
     <div className="section">
       <h2>Project Details</h2>
@@ -64,6 +79,7 @@ function Projects({ formData, setFormData }) {
           </div>
         </form>
       ))}
+       <button onClick={addForm} className="border-purple-200 text-purple-600 hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700 rounded-[4px]">ADD FEILD</button>
     </div>
   );
 }

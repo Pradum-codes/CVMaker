@@ -1,10 +1,19 @@
+import React, { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+
 function PersonalDetails({ data }) {
   return (
-    <div className="mb-8">
-      <h1 className="text-3xl font-bold text-gray-800">{data.name}</h1>
+    <div className="mb-8 flex flex-col place-items-center">
+      <h1 className="mb-4 text-3xl font-bold text-gray-800">{data.name}</h1>
       <div className="flex flex-wrap gap-4 text-gray-600">
         {data.location && <p>{data.location}</p>}
-        {data.email && <p>| {data.email}</p>}
+        {data.email && (
+          <>
+            <p>|</p>
+            <img src="./public/email.svg" className="h-6 w-6 m-0.5 mr-0"/>
+            <p>{data.email}</p>
+          </>
+        )}
         {data.phone && <p>| {data.phone}</p>}
         {data.website && (
           <>
@@ -15,13 +24,15 @@ function PersonalDetails({ data }) {
         {data.linkedin && (
           <>
             <p>|</p>
-            <a href={data.linkedin} className="text-blue-600 hover:underline">LinkedIn</a>
+            <img src="./public/linkedin.svg" className="h-6 w-6 m-0.5 mr-0"/>
+            <a href={data.linkedin} className="text-blue-600 hover:underline">{data.linkedin}</a>
           </>
         )}
         {data.github && (
           <>
             <p>|</p>
-            <a href={data.github} className="text-blue-600 hover:underline">GitHub</a>
+            <img src="./public/github.svg" className="h-6 w-6 m-0.5 mr-0"/>
+            <a href={data.github} className="text-blue-600 hover:underline">{data.github}</a>
           </>
         )}
       </div>
@@ -108,17 +119,30 @@ function AdditionalActivities({ data }) {
 }
 
 function Preview({ formData }) {
+    const componentRef = useRef(null);   
+    const handlePrint = useReactToPrint({
+    contentRef: componentRef,
+    documentTitle: `My_HeaderText_Print_${formData.personalDetails.name}`,
+    onAfterPrint: () => console.log('Printing completed'),
+  });
+
   return (
-    <div className="preview bg-gray-100 p-4 rounded-lg">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Preview</h2>
-      <PersonalDetails data={formData.personalDetails} />
-      <EducationDetails data={formData.educationDetails} />
-      <Projects data={formData.projects} />
-      <Technologies data={formData.technologies} />
-      <Extracurricular data={formData.extracurricular} />
-      <Certifications data={formData.certifications} />
-      <AdditionalActivities data={formData.additionalActivities} />
-    </div>
+    <>
+      <div>
+        <button onClick={handlePrint}>Print your CV</button>
+      </div>
+      <div
+        ref={componentRef} 
+        className="margin-4 p-6 bg-white shadow-lg border-4 max-w-3xl mx-auto">
+          <PersonalDetails data={formData.personalDetails}  />
+          <EducationDetails data={formData.educationDetails} />
+          <Projects data={formData.projects} />
+          <Technologies data={formData.technologies} />
+          <Extracurricular data={formData.extracurricular} />
+          <Certifications data={formData.certifications} />
+          <AdditionalActivities data={formData.additionalActivities} />
+      </div>
+    </>
   );
 }
 
