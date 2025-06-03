@@ -128,21 +128,33 @@ function Preview({ formData }) {
 
   return (
     <>
-      <div>
-        <button onClick={handlePrint}>Print your CV</button>
-      </div>
-      <div
-        ref={componentRef} 
-        className="margin-4 p-6 bg-white shadow-lg border-4 max-w-3xl mx-auto">
-          <PersonalDetails data={formData.personalDetails}  />
+      <div className="flex flex-col items-center w-full min-h-screen py-6">
+        {/* Print Button Centered at the Top */}
+        <div className="mb-4">
+          <button
+            onClick={handlePrint}
+            className="bg-purple-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-purple-700 transition duration-200"
+          >
+            Print your CV
+          </button>
+        </div>
+
+        {/* Fixed-Size Preview Box */}
+        <div
+          ref={componentRef}
+          className="w-[850px] h-[1100px] bg-white shadow-xl border-2 border-gray-300 overflow-auto p-8"
+        >
+          <PersonalDetails data={formData.personalDetails} />
           <EducationDetails data={formData.educationDetails} />
           <Projects data={formData.projects} />
           <Technologies data={formData.technologies} />
           <Extracurricular data={formData.extracurricular} />
           <Certifications data={formData.certifications} />
           <AdditionalActivities data={formData.additionalActivities} />
+        </div>
       </div>
     </>
+
   );
 }
 

@@ -56,7 +56,7 @@ function App() {
 
 
   return (
-    <div className="main">
+    <div className="flex flex-col items-center gap-10 py-6 bg-gray-100 min-h-screen">
       <Editor formData={formData} setFormData={setFormData}/>
       <Preview formData={formData} />
     </div>
